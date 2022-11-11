@@ -1,0 +1,1 @@
+A repository for the Dreaming of Electric Sheep strand studio at Kingston School of Art.
