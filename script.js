@@ -9,32 +9,37 @@ heading.innerHTML = text;
 
 
 
-
+let spanWidths = [];
 const spans = gsap.utils.toArray("#heading span");
 
 for (let i = 0; i < spans.length; i++) {
-  let spanWidth = spans[i].getBoundingClientRect().width;
-  console.log(spanWidth);
+  spanWidths[i] = spans[i].getBoundingClientRect().width;
   if (i % 2 == 0) {
-    gsap.set(spans[i], { x: () => window.innerWidth + spanWidth})
+    gsap.set(spans[i], { x: () => window.innerWidth})
     gsap.to(spans[i], { 
-      x: () => -((window.innerWidth * 3) - spanWidth), 
+      x: () => -((window.innerWidth * 3) - spanWidths[i]), 
       delay: 1, 
       duration: gsap.utils.random(7, 10),
       repeat: -1,
-      // yoyo: true,
+      yoyo: true,
       ease: 'none'
     })
   } else {
-    gsap.set(spans[i], { x: -spanWidth})
+    gsap.set(spans[i], { x: 0 - spanWidths[i]})
     gsap.to(spans[i], { 
-      x: () => window.innerWidth + spanWidth, 
+      x: () => window.innerWidth + spanWidths[i], 
       delay: 1, 
       duration: gsap.utils.random(7, 10),
       repeat: -1,
-      // yoyo: true,
+      yoyo: true,
       ease: 'none'
     })
   }
   
 }
+
+window.addEventListener('resize', () => {
+  for (let i = 0; i < spans.length; i++) {
+    spanWidths[i] = spans[i].getBoundingClientRect().width;
+  }
+})
