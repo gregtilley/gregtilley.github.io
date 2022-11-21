@@ -51,6 +51,8 @@ function draw() {
 }
 
 function windowResized() {
-  console.log(windowWidth);
-  console.log(window.innerWidth)
+  leading = window.innerHeight / spans.length;
+  for (let i = 0; i < spans.length; i++) {
+    spans[i].y = i * leading;
+  }
 }
