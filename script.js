@@ -34,8 +34,8 @@ function setup() {
   createCanvas(windowWidth, windowHeight);
   textWidth = (width / cols);
   textHeight = (height / rows);
-  borderLeft = textWidth / 3;
-  borderTop = textHeight / 3;
+  borderLeft = textWidth;
+  borderTop = textHeight;
   textFont(dmMono);
   textSize(width / (cols * 3));
   textAlign(CENTER, CENTER);
@@ -97,8 +97,8 @@ function setSizes() {
   }
   textWidth = (width / cols);
   textHeight = (height / rows);
-  borderLeft = textWidth / 4;
-  borderTop = textHeight / 4;
+  borderLeft = textWidth / 2.5;
+  borderTop = textHeight / 3;
   textSize(width / (cols * 3));
   console.log(width / height);
 }
