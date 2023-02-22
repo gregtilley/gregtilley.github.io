@@ -106,3 +106,5 @@ function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
   setSizes();
 }
+
+setSizes();
