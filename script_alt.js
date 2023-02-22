@@ -4,6 +4,9 @@ let sourceText = "Dreaming·of·Electric·Sheep";
 let sourceLetters;
 let lettersRandom;
 
+let resetText = "··························";
+let resetLetters;
+
 let xPos = 0;
 let yPos = 0;
 let cols = 6;
@@ -23,6 +26,8 @@ let rightLetters = 0;
 let letterCounter = 0;
 let addLetter = 20;
 
+let reset = true;
+
 function preload() {
   dmMono = loadFont('font/DM_Mono/DMMono-Regular.ttf');
 }
@@ -31,6 +36,7 @@ function setup() {
   // pixelDensity(1);
   sourceLetters = split(sourceText, '');
   lettersRandom = newWords(sourceLetters);
+  resetLetters = split(resetText, '');
   createCanvas(windowWidth, windowHeight);
   textWidth = (width / cols);
   textHeight = (height / rows);
@@ -50,16 +56,29 @@ function draw() {
   // fill(0, 255, 0);
   for (let i = 0; i < rows; i++) {
     for (let j = 0; j < cols; j++) {
-      if (currentLetter < lettersRandom.length) {
-        // if (lettersRandom[currentLetter] == "·") {
-        //   noStroke();
-        //   fill(0, 255, 0);        
-        // } else {
-        //   stroke(0, 255, 0);
-        //   noFill();
-        // }
-        text(lettersRandom[currentLetter], borderLeft + (j * textWidth), borderTop + ((i * textHeight)));
-        currentLetter++;
+      if (reset == false) {
+        changeFrame = 4;
+        addLetter = 20;
+        if (currentLetter < lettersRandom.length) {
+          if (lettersRandom[currentLetter] == "·") {
+            noStroke();
+            fill(0, 255, 0);        
+          } else {
+            stroke(0, 255, 0);
+            noFill();
+          }
+          text(lettersRandom[currentLetter], borderLeft + (j * textWidth), borderTop + ((i * textHeight)));
+          currentLetter++;
+        }
+      } else {
+        changeFrame = 2;
+        addLetter = 5;
+        if (currentLetter < resetLetters.length) {
+          noStroke();
+          fill(0, 255, 0);
+          text(resetLetters[currentLetter], borderLeft + (j * textWidth), borderTop + ((i * textHeight)));
+          currentLetter++;
+        }
       }
     }
   }
