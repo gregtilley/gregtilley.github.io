@@ -39,6 +39,7 @@ function setup() {
   textFont(dmMono);
   textSize(width / (cols * 3));
   textAlign(CENTER, CENTER);
+  setSizes();
 }
 
 function draw() {
