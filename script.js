@@ -1,58 +1,107 @@
-const heading = document.getElementById("heading");
-let text = heading.innerHTML;
-const words = text.split(" ");
-for (let i = 0; i < words.length; i++) {
-  words[i] = '<span id="span_' + i + '">' + words[i] + '</span>';
+document.querySelector('main').innerHTML = "";
+
+let sourceText = "Dreaming of Electric Sheep";
+let sourceLetters;
+let lettersRandom;
+
+let xPos = 0;
+let yPos = 0;
+let cols = 6;
+let rows = 5;
+
+let dmMono;
+let textWidth;
+let textHeight;
+let borderLeft;
+let borderTop;
+let currentLetter = 0;
+
+let currentFrame = 0;
+let changeFrame = 5;
+
+let rightLetters = 0;
+let letterCounter = 0;
+let addLetter = 20;
+
+function preload() {
+  dmMono = loadFont('font/DM_Mono/DMMono-Regular.ttf');
 }
-text = words.join(" ");
-heading.innerHTML = text;
-
-
-
-
-// const spans = gsap.utils.toArray("#heading span");
-//const spans = document.getElementsByTagName('span');
-let spans = [];
-let spansX = [];
-let spansY = [];
-let spansSpeed = [];
-let leading;
-let switchThreshold = 10;
 
 function setup() {
-  noCanvas();
-  spans = selectAll('span');
-  leading = window.innerHeight / spans.length;
-  for (let i = 0; i < spans.length; i++) {
-    spans[i].x = 0;
-    spans[i].y = i * leading;
-    spansX[i] = spans[i].x;
-    spansY[i] = spans[i].y;
-    spansSpeed[i] = Math.round(random(2, 4));
-  }
+  sourceLetters = split(sourceText, '');
+  lettersRandom = newWords(sourceLetters);
+  createCanvas(windowWidth, windowHeight);
+  textWidth = (width / cols);
+  textHeight = (height / rows);
+  borderLeft = textWidth / 4;
+  borderTop = textHeight / 4;
+  textFont(dmMono);
+  textSize(width / (cols * 3));
+  textAlign(CENTER, CENTER);
 }
 
 function draw() {
-  for (let i = 0; i < spans.length; i++) {
-    let spanWidth = spans[i].elt.getBoundingClientRect().width;
-    let spanPos = (spansX[i] + spanWidth);
-    if (spansX[i] < 0) {
-      if (spanPos < (windowWidth - switchThreshold)) {
-        spansSpeed[i] = -spansSpeed[i];
-      }
-    } else {
-      if (spanPos > (windowWidth + switchThreshold)) {
-        spansSpeed[i] = -spansSpeed[i];
+  strokeWeight(2);
+  stroke(0, 255, 0);
+  noFill();
+  background(0);
+  // fill(0, 255, 0);
+  for (let i = 0; i < rows; i++) {
+    for (let j = 0; j < cols; j++) {
+      if (currentLetter < lettersRandom.length) {
+        text(lettersRandom[currentLetter], borderLeft + (j * textWidth), borderTop + ((i * textHeight)));
+        currentLetter++;
       }
     }
-    spans[i].position(spansX[i], spansY[i])
-    spansX[i] += spansSpeed[i];
-  } 
+  }
+  if (currentLetter >= lettersRandom.length) {
+    currentLetter = 0;
+    currentFrame++;
+    if (currentFrame > changeFrame) {
+      lettersRandom = newWords(sourceLetters);
+      currentFrame = 0;
+      letterCounter++;
+      if (letterCounter > addLetter) {
+        rightLetters++;
+        letterCounter = 0;
+      }
+      if (rightLetters > sourceLetters.length + 5) {
+        rightLetters = 0;
+      }
+    }
+  }
+}
+
+function newWords(letters) {
+  let newWord = shuffle(letters);
+  for (let i = 0; i < rightLetters; i++) {
+    if (i < sourceLetters.length) {
+      newWord[i] = sourceLetters[i];
+    }
+  }
+  return newWord;
+}
+
+function setSizes() {
+  if ((width / height) > 1) {
+    cols = 6;
+    rows = 5;
+  } else if ((width / height) > 0.5) {
+    cols = 5;
+    rows = 6;
+  } else {
+    cols = 4;
+    rows = 7;
+  }
+  textWidth = (width / cols);
+  textHeight = (height / rows);
+  borderLeft = textWidth / 4;
+  borderTop = textHeight / 4;
+  textSize(width / (cols * 3));
+  console.log(width / height);
 }
 
 function windowResized() {
-  leading = window.innerHeight / spans.length;
-  for (let i = 0; i < spans.length; i++) {
-    spans[i].y = i * leading;
-  }
+  resizeCanvas(windowWidth, windowHeight);
+  setSizes();
 }
