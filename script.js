@@ -17,7 +17,7 @@ let borderTop;
 let currentLetter = 0;
 
 let currentFrame = 0;
-let changeFrame = 5;
+let changeFrame = 4;
 
 let rightLetters = 0;
 let letterCounter = 0;
