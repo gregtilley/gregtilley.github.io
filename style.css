@@ -17,8 +17,9 @@ body {
 }
 
 main {
-  padding: 2rem;
-  
+  height: 100vh;
+  overflow: hidden;
+  width: 100vw;
 }
 
 h1 {

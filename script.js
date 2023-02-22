@@ -28,20 +28,21 @@ function preload() {
 }
 
 function setup() {
+  // pixelDensity(1);
   sourceLetters = split(sourceText, '');
   lettersRandom = newWords(sourceLetters);
   createCanvas(windowWidth, windowHeight);
   textWidth = (width / cols);
   textHeight = (height / rows);
-  borderLeft = textWidth / 4;
-  borderTop = textHeight / 4;
+  borderLeft = textWidth / 3;
+  borderTop = textHeight / 3;
   textFont(dmMono);
   textSize(width / (cols * 3));
   textAlign(CENTER, CENTER);
 }
 
 function draw() {
-  strokeWeight(2);
+  strokeWeight(1);
   stroke(0, 255, 0);
   noFill();
   background(0);
